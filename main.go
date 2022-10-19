@@ -56,7 +56,7 @@ func main() {
 				return
 			}
 			commandStr := req.PostForm.Get("command")
-			commandAndArgs := strings.Split(commandStr, " ")
+			commandAndArgs := strings.SplitN(commandStr, " ", 2)
 			reader := strings.NewReader("Queued\r\n")
 			io.Copy(rw, reader)
 			oc := make(chan []byte)
