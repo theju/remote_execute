@@ -56,13 +56,12 @@ func main() {
 				return
 			}
 			commandStr := req.PostForm.Get("command")
-			commandAndArgs := strings.SplitN(commandStr, " ", 2)
 			reader := strings.NewReader("Queued\r\n")
 			io.Copy(rw, reader)
 			oc := make(chan []byte)
 			done := 0
 			go func() {
-				cmd := exec.Command(commandAndArgs[0], commandAndArgs[1:]...)
+				cmd := exec.Command("bash", "-c", commandStr)
 				log.Println("Command:", cmd.String())
 				op, err := cmd.CombinedOutput()
 				if err != nil {
